@@ -10,7 +10,7 @@ window.addEventListener("load", () => {
         navigator.geolocation.getCurrentPosition((position) => {
             fetchWeatherByCoords(position.coords.latitude, position.coords.longitude);
         }, () => {
-            checkWeather("Chandigarh"); // Agar user deny kare toh default city
+            checkWeather("Chandigarh"); // Default city agar location denied ho
         });
     }
 });
@@ -32,62 +32,25 @@ async function checkWeather(city) {
 }
 
 function updateUI(data) {
-    // City & Temp
     document.querySelector(".city").innerHTML = data.name;
     document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
     document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
     
-    // Wind Speed Fix: Meter/sec ko km/h mein convert kiya (data.wind.speed * 3.6)
+    // Wind Speed Fix (km/h conversion)
     document.querySelector(".wind").innerHTML = Math.round(data.wind.speed * 3.6) + " km/h";
     document.getElementById("weather-desc").innerHTML = data.weather[0].description;
 
-    // Date & Day update
+    // Date & Day logic
     const now = new Date();
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     document.getElementById("date-time").innerHTML = now.toLocaleDateString('en-US', options);
 
-    // Weather Condition based BG & Card color
+    // Weather Condition based BG (Dark & Eye-friendly)
     let weatherMain = data.weather[0].main;
     let bgImg = "";
-    let cardBg = "";
+    let cardBg = "rgba(0, 0, 0, 0.5)"; // Darker glass effect
 
     if (weatherMain == "Clouds") {
-        bgImg = "url('https://images.unsplash.com/photo-1534088568595-a066f7105a21')";
-        cardBg = "rgba(100, 116, 139, 0.3)";
+        bgImg = "url('https://images.unsplash.com/photo-1483977399921-6cf3832d77a5?q=80&w=1920')"; 
     } else if (weatherMain == "Clear") {
-        bgImg = "url('https://images.unsplash.com/photo-1506466010722-395aa2bef877')";
-        cardBg = "rgba(245, 158, 11, 0.2)";
-    } else if (weatherMain == "Rain" || weatherMain == "Drizzle") {
-        bgImg = "url('https://images.unsplash.com/photo-1534274988757-a28bf1a57c17')";
-        cardBg = "rgba(30, 58, 138, 0.4)";
-    } else if (weatherMain == "Mist" || weatherMain == "Haze") {
-        bgImg = "url('https://images.unsplash.com/photo-1543968996-ee822b8176ba')";
-        cardBg = "rgba(255, 255, 255, 0.1)";
-    } else {
-        bgImg = "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1504608524841-42fe6f032b4b')";
-        cardBg = "rgba(255, 255, 255, 0.2)";
-    }
-
-    document.body.style.backgroundImage = bgImg;
-    document.querySelector(".card").style.background = cardBg;
-
-    // AQI Fetch
-    fetchAQI(data.coord.lat, data.coord.lon);
-}
-
-async function fetchAQI(lat, lon) {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`);
-    const data = await response.json();
-    const aqi = data.list[0].main.aqi;
-    const aqiLevels = ["", "Good", "Fair", "Moderate", "Poor", "Very Poor"];
-    const aqiSpan = document.getElementById("aqi-val");
-    aqiSpan.innerHTML = `${aqi} (${aqiLevels[aqi]})`;
-    
-    // AQI color change based on severity
-    if(aqi <= 2) aqiSpan.style.color = "#00ff88";
-    else if(aqi == 3) aqiSpan.style.color = "#ffcc00";
-    else aqiSpan.style.color = "#ff4d4d";
-}
-
-searchBtn.addEventListener("click", () => { checkWeather(searchBox.value); });
-searchBox.addEventListener("keypress", (e) => { if(e.key === "Enter") checkWeather(searchBox.value); });
+        bgImg = "url('
