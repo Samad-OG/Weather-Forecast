@@ -5,11 +5,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background 1s ease-in-out; /* Smooth wallpaper change */
+    transition: background 1s ease-in-out; 
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    /* Default Background */
+    
     background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1504608524841-42fe6f032b4b');
 }
 
@@ -21,7 +21,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2);
     text-align: center; 
     box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    transition: background 0.5s ease; /* Smooth card color change */
+    transition: background 0.5s ease; 
 }
 
 .search { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
@@ -40,3 +40,4 @@ body {
 .col img { width: 30px; margin-right: 10px; }
 .aqi-container { margin-top: 25px; padding: 12px; background: rgba(0,0,0,0.3); border-radius: 15px; font-size: 14px; }
 #aqi-val { font-weight: bold; color: #00ff88; }
+
