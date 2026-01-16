@@ -4,13 +4,12 @@ const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q="
 const searchBox = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");
 
-// 1. Page load hote hi location fetch karega
 window.addEventListener("load", () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             fetchWeatherByCoords(position.coords.latitude, position.coords.longitude);
         }, () => {
-            checkWeather("Chandigarh"); // Agar user block kare toh default city
+            checkWeather("Chandigarh"); 
         });
     }
 });
@@ -32,24 +31,24 @@ async function checkWeather(city) {
 }
 
 function updateUI(data) {
-    // Basic Details
+    
     document.querySelector(".city").innerHTML = data.name;
     document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
     document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
     
-    // Wind Speed Accuracy (km/h conversion)
+  
     document.querySelector(".wind").innerHTML = Math.round(data.wind.speed * 3.6) + " km/h";
     document.getElementById("weather-desc").innerHTML = data.weather[0].description;
 
-    // Date & Day update
+   
     const now = new Date();
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     document.getElementById("date-time").innerHTML = now.toLocaleDateString('en-US', options);
 
-    // Dynamic Weather Backgrounds (Premium & Calm Look)
+    
     let weatherMain = data.weather[0].main;
     let bgImg = "";
-    let cardBg = "rgba(0, 0, 0, 0.45)"; // Dark glass effect for the box
+    let cardBg = "rgba(0, 0, 0, 0.45)"; 
 
     if (weatherMain == "Clouds") {
         bgImg = "url('https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?q=80&w=1920')"; 
@@ -65,11 +64,11 @@ function updateUI(data) {
         bgImg = "url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1920')"; 
     }
 
-    // Apply background with a dark overlay for high contrast and eye comfort
+    
     document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), ${bgImg}`;
     document.querySelector(".card").style.background = cardBg;
 
-    // Fetch Air Quality (AQI)
+    
     fetchAQI(data.coord.lat, data.coord.lon);
 }
 
@@ -81,13 +80,14 @@ async function fetchAQI(lat, lon) {
     const aqiSpan = document.getElementById("aqi-val");
     aqiSpan.innerHTML = `${aqi} (${aqiLevels[aqi]})`;
     
-    // AQI text color change
-    if(aqi <= 2) aqiSpan.style.color = "#00ff88"; // Greenish
-    else if(aqi == 3) aqiSpan.style.color = "#ffcc00"; // Yellowish
-    else aqiSpan.style.color = "#ff4d4d"; // Reddish
+    
+    if(aqi <= 2) aqiSpan.style.color = "#00ff88";
+    else if(aqi == 3) aqiSpan.style.color = "#ffcc00";
+    else aqiSpan.style.color = "#ff4d4d"; 
 }
 
-// Search triggers
+
 searchBtn.addEventListener("click", () => { checkWeather(searchBox.value); });
 searchBox.addEventListener("keypress", (e) => { if(e.key === "Enter") checkWeather(searchBox.value); });
+
 
