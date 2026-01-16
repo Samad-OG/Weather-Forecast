@@ -1,4 +1,4 @@
- const apiKey = "1893a50ceeb82342cb7155224a6d10ed";
+ const apiKey = "5f31ff223ad443522b5b6b53156564f6";
 const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
 const searchBox = document.querySelector(".search input");
@@ -90,3 +90,4 @@ async function fetchAQI(lat, lon) {
 // Search triggers
 searchBtn.addEventListener("click", () => { checkWeather(searchBox.value); });
 searchBox.addEventListener("keypress", (e) => { if(e.key === "Enter") checkWeather(searchBox.value); });
+
