@@ -1,4 +1,4 @@
- const apiKey = "5f31ff223ad443522b5b6b53156564f6";
+ const apiKey = "1893a50ceeb82342cb7155224a6d10ed";
 const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
 const searchBox = document.querySelector(".search input");
@@ -31,16 +31,16 @@ async function checkWeather(city) {
 }
 
 function updateUI(data) {
-    
+   
     document.querySelector(".city").innerHTML = data.name;
     document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
     document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
     
-  
+    
     document.querySelector(".wind").innerHTML = Math.round(data.wind.speed * 3.6) + " km/h";
     document.getElementById("weather-desc").innerHTML = data.weather[0].description;
 
-   
+  
     const now = new Date();
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     document.getElementById("date-time").innerHTML = now.toLocaleDateString('en-US', options);
@@ -48,7 +48,6 @@ function updateUI(data) {
     
     let weatherMain = data.weather[0].main;
     let bgImg = "";
-    let cardBg = "rgba(0, 0, 0, 0.45)"; 
 
     if (weatherMain == "Clouds") {
         bgImg = "url('https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?q=80&w=1920')"; 
@@ -64,30 +63,34 @@ function updateUI(data) {
         bgImg = "url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1920')"; 
     }
 
-    
     document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), ${bgImg}`;
-    document.querySelector(".card").style.background = cardBg;
 
     
     fetchAQI(data.coord.lat, data.coord.lon);
 }
 
 async function fetchAQI(lat, lon) {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`);
-    const data = await response.json();
-    const aqi = data.list[0].main.aqi;
-    const aqiLevels = ["", "Good", "Fair", "Moderate", "Poor", "Very Poor"];
-    const aqiSpan = document.getElementById("aqi-val");
-    aqiSpan.innerHTML = `${aqi} (${aqiLevels[aqi]})`;
-    
-    
-    if(aqi <= 2) aqiSpan.style.color = "#00ff88";
-    else if(aqi == 3) aqiSpan.style.color = "#ffcc00";
-    else aqiSpan.style.color = "#ff4d4d"; 
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`);
+        const data = await response.json();
+        
+        const aqi = data.list[0].main.aqi; 
+        const pm25 = data.list[0].components.pm2_5; 
+        
+        const aqiLevels = ["", "Good", "Fair", "Moderate", "Poor", "Very Poor"];
+        const aqiSpan = document.getElementById("aqi-val");
+        
+        
+        aqiSpan.innerHTML = `${aqiLevels[aqi]} (PM2.5: ${Math.round(pm25)})`;
+        
+        
+        if(aqi <= 2) aqiSpan.style.color = "#00ff88"; 
+        else if(aqi == 3) aqiSpan.style.color = "#ffcc00"; 
+        else aqiSpan.style.color = "#ff4d4d"; 
+    } catch (error) {
+        console.error("AQI Fetch Error:", error);
+    }
 }
-
 
 searchBtn.addEventListener("click", () => { checkWeather(searchBox.value); });
 searchBox.addEventListener("keypress", (e) => { if(e.key === "Enter") checkWeather(searchBox.value); });
-
-
