@@ -1,11 +1,31 @@
-🌦️ Weather Forecast App
-A simple, responsive web application that provides real-time weather updates and forecasts using HTML, CSS, and JavaScript.✨ Features
-Real-time Weather: Get current temperature and weather conditions.
-Search Functionality: Look up weather information for any city worldwide.
-Responsive Design: Optimized for both desktop and mobile viewing.
-Dynamic Backgrounds: (Optional: Mention if your app changes visuals based on weather conditions).
-🛠️ Tech Stack
-HTML5: Structural layout.
-CSS3: Custom styling and responsive design.
-JavaScript (ES6+): Logic and API integration.
-OpenWeatherMap API
+ # 🌤️ Weather Forecast Application
+
+A sleek, responsive web application that fetches and displays real-time weather data and forecasts for any city worldwide using the **OpenWeatherMap API**.
+
+---
+
+## ✨ Features
+
+- **🌐 Live Weather Updates:** Fetch current temperature, humidity, wind speed, and general weather conditions instantly.
+- **🔍 Global Search:** Search weather metrics for any city across the world.
+- **📱 Responsive UI:** Seamlessly designed for desktop, tablet, and mobile viewing.
+- **🎨 Dynamic Themes / Visuals:** UI elements adapt based on live weather conditions.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** HTML5, CSS3, JavaScript (ES6+)
+- **API Integration:** OpenWeatherMap API
+- **Deployment:** GitHub Pages
+
+---
+
+## 🚀 Getting Started
+
+Follow these steps to run the application locally:
+
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/Samad-OG/Weather-Forecast.git](https://github.com/Samad-OG/Weather-Forecast.git)
+cd Weather-Forecast
